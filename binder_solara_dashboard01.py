@@ -2,6 +2,7 @@ import solara
 import pandas as pd
 import os
 import plotly.express as px
+import solara.server
 
 # Load dataset
 df = pd.read_csv('happiness_years02.csv')
@@ -39,6 +40,8 @@ def Page():
     # Display the map
     solara.FigurePlotly(fig_map)
 
+app = solara.App(Page)
+
 if __name__ == "__main__":
-    port = int(os.getenv("PORT", 8765))  # Render sets $PORT, default to 8765 if running locally
-    solara.run(Page, port=port)
+    port = int(os.getenv("PORT", 8765))
+    solara.server.run(app, port=port, host="0.0.0.0")
